@@ -34,12 +34,13 @@ class Admin:
     async def info(self, username: str = None, password: str = None, token: dict = None):
         username = username or self.username
         password = password or self.password
+        panel = (username, password, self.address)
         try :
-            return await request(panel=self.panel, endpoint='/admin', token=token)
+            return await request(panel=panel, endpoint='/admin', token=token)
         except aiohttp.ClientError as error:
             logging.error(f'we have a error in get currect admin info: {error}')
             return None
-
+            
     async def add(self, username: str, password: str, is_sudo: bool = False, telegram_id: int = None, discord_webhook: str = None, token: dict = None):
         try :
             data = {
